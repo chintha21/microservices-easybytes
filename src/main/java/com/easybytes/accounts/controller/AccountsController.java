@@ -4,21 +4,24 @@ import com.easybytes.accounts.constants.AccountConstants;
 import com.easybytes.accounts.dto.CustomerDto;
 import com.easybytes.accounts.dto.ResponseDto;
 import com.easybytes.accounts.service.IAccountsService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="/api", produces = (MediaType.APPLICATION_JSON_VALUE))
 @AllArgsConstructor
+@Validated
 public class AccountsController {
 
     private IAccountsService accountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createAccont(@RequestBody CustomerDto customerDto){
+    public ResponseEntity<ResponseDto> createAccont(@Valid @RequestBody CustomerDto customerDto){
         accountsService.createAccount(customerDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
